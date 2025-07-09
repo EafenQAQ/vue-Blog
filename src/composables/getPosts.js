@@ -23,6 +23,8 @@ const getPosts = () => {
   const uri = 'http://localhost:3002/posts'
 
   const load = async () => {
+    // 模拟延迟
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     try {
       const res = await fetch(uri)
       if (!res.ok) {

@@ -18,11 +18,14 @@ import { ref } from 'vue'
 
 // 获取文章数据
 const getPost = () => {
-  const post = ref({})
+  const post = ref(null)
   const error = ref(null)
   const uri = 'http://localhost:3002/posts/'
 
   const load = async (id) => {
+    // 模拟延迟
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
     try {
       const res = await fetch(uri + id)
       if (!res.ok) {

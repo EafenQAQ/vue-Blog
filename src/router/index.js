@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('../views/PostDetails.vue'),
       props: true,
     },
+    {
+      path: '/publish',
+      name: 'publish',
+      component: () => import('../views/PublishPost.vue'),
+    },
   ],
 })
 

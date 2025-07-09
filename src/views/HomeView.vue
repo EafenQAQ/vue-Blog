@@ -6,7 +6,7 @@
       <PostList :posts="posts" />
     </div>
     <div v-else>
-      <p>加载中...</p>
+      <LoadSpinner />
     </div>
 
     <div class="palette">
@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+import LoadSpinner from '@/components/LoadSpinner.vue';
 import PostList from '@/components/PostList.vue';
 import getPosts from '@/composables/getPosts';
 
@@ -41,7 +42,7 @@ load();
   gap: 10px;
   margin-top: 20px;
   /* 放置在页面底部 */
-  
+
   bottom: 0;
 }
 

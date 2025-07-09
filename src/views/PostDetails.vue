@@ -12,12 +12,17 @@
       </div>
     </template>
     <template v-else>
-      <p>加载中...</p>
+      <LoadSpinner />
     </template>
+
+
   </div>
+
 </template>
 
 <script setup>
+import LoadSpinner from '@/components/LoadSpinner.vue';
+
 import getPost from '@/composables/getPost';
 
 const props = defineProps({
@@ -54,24 +59,7 @@ load(postID);
   border: 1px solid var(--secondary-color);
 }
 
-/* 加载中样式 */
-#PostDetails p {
-  text-align: center;
-  font-size: 1.2em;
-  color: var(--base-accent);
-  padding: 3rem 0;
-  animation: pulse 1.5s ease-in-out infinite alternate;
-}
 
-@keyframes pulse {
-  from {
-    opacity: 0.6;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
 
 /* 文章标题样式 */
 .post-title {
