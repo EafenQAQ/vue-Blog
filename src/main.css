@@ -29,3 +29,15 @@ main {
   margin: 0.5rem;
   margin-top: 1.5rem;
 }
+
+/* 去除a标签基本样式 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+/* grid布局 */
+.layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+}

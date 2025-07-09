@@ -2,8 +2,9 @@
   <div id="Home">
 
     <div v-if="error">{{ error }}</div>
-    <div v-if="posts.length">
+    <div v-if="posts.length" class="layout">
       <PostList :posts="posts" />
+      <TagsCloud :posts="posts" />
     </div>
     <div v-else>
       <LoadSpinner />
@@ -25,6 +26,7 @@
 <script setup>
 import LoadSpinner from '@/components/LoadSpinner.vue';
 import PostList from '@/components/PostList.vue';
+import TagsCloud from '@/components/TagsCloud.vue';
 import getPosts from '@/composables/getPosts';
 
 const { posts, error, load } = getPosts();

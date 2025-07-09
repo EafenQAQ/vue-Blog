@@ -7,10 +7,10 @@
     <p class="post-author">作者: {{ post.author }}</p>
     <p class="post-date">发布日期: {{ post.date }}</p>
     <div class="post-tags">
-      <span class="pill" v-for="tag in post.tags" :key="tag">
-        <RouterLink :to="{ name: 'tag', params: { tag: tag } }">
-          # {{ tag }}
-        </RouterLink>
+      <span class="pill" v-for="tag in post.tags" :key="tag" @click="gotoTag(tag)">
+
+        # {{ tag }}
+
       </span>
     </div>
 
@@ -22,6 +22,7 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
 
 const props = defineProps({
   post: {
@@ -39,6 +40,10 @@ const snippet = computed(
   }
 
 )
+
+const gotoTag = (tag) => {
+  router.push({ name: 'tag', params: { tag: tag } })
+}
 
 
 
