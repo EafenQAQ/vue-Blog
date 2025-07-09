@@ -20,6 +20,11 @@ const router = createRouter({
       name: 'publish',
       component: () => import('../views/PublishPost.vue'),
     },
+    {
+      path: '/tag/:tag',
+      name: 'tag',
+      component: () => import('../views/FilteredPosts.vue'),
+    },
   ],
 })
 

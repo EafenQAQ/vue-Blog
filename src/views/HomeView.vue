@@ -1,6 +1,6 @@
 <template>
   <div id="Home">
-    <h1>猫爪博客🐾</h1>
+
     <div v-if="error">{{ error }}</div>
     <div v-if="posts.length">
       <PostList :posts="posts" />

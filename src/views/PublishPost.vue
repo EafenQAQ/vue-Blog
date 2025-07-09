@@ -21,7 +21,9 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
 const title = ref('');
 const content = ref('');
@@ -68,6 +70,7 @@ const handleSubmit = async () => {
     console.error('发布文章失败:', error)
   }
 
+  router.push('/')
 }
 
 
