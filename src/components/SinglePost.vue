@@ -1,7 +1,9 @@
 <template>
   <div id="SinglePost" class="post">
-    <h2 class="post-title">{{ post.title }}</h2>
-    <p class="post-content">{{ post.content }}</p>
+    <RouterLink :to="{ name: 'post', params: { id: post.id } }">
+      <h2 class="post-title">{{ post.title }}</h2>
+    </RouterLink>
+    <p class="post-content">{{ snippet }}</p>
     <p class="post-author">作者: {{ post.author }}</p>
     <p class="post-date">发布日期: {{ post.date }}</p>
 
@@ -10,12 +12,24 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   post: {
     type: Object,
     required: true
   }
 });
+
+const snippet = computed(
+  () => {
+    // 截取前100个字符作为摘要
+    return props.post.content.length > 100
+      ? props.post.content.slice(0, 100) + '...'
+      : props.post.content;
+  }
+
+)
 </script>
 
 <style scoped>
@@ -23,23 +37,41 @@ const props = defineProps({
   padding: 20px;
   margin: 20px 0;
   border-radius: 8px;
-  background-color: var(--base-light);
+  border: dashed 2px var(--base-accent);
 }
+
 .post-title {
   font-size: 1.5em;
   color: var(--base-accent-2);
 }
+
+/* 悬停效果 */
+.post-title:hover {
+  color: var(--base-accent);
+  cursor: pointer;
+}
+
+/* 去除router-link默认样式 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .post-content {
   font-size: 1.2em;
   color: var(--secondary-color);
 }
-.post-author, .post-date {
+
+.post-author,
+.post-date {
   font-size: 0.9em;
   color: var(--secondary-accent);
 }
+
 .post-author {
   margin-top: 10px;
 }
+
 .post-date {
   margin-top: 5px;
 }

@@ -1,9 +1,13 @@
 <template>
   <div id="PostList">
     <h2>文章列表</h2>
+
+    <!-- 文章详情 -->
     <div class="postList" v-for="post in posts" :key="post.id">
       <SinglePost :post="post" />
     </div>
+
+
 
   </div>
 </template>
@@ -17,6 +21,8 @@ const props = defineProps({
     required: true
   }
 });
+
+
 </script>
 
 <style scoped>
@@ -25,6 +31,7 @@ const props = defineProps({
   flex-direction: column;
   gap: 20px;
 }
+
 /* 居中 */
 #PostList {
   margin: 0 auto;
