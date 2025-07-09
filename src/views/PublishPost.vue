@@ -5,7 +5,7 @@
       <input v-model="title" type="text" required />
 
       <label>文章正文：</label>
-      <textarea v-model="body" required></textarea>
+      <textarea v-model="content" required></textarea>
 
       <label>Tags (按回车添加tag)</label>
       <input type="text" v-model="tag" @keydown.enter.prevent="addTag">
@@ -24,7 +24,7 @@ import { ref } from 'vue';
 
 
 const title = ref('');
-const body = ref('');
+const content = ref('');
 const tag = ref('');
 const tags = ref([])
 
@@ -40,11 +40,36 @@ const removeTag = (tag) => {
 }
 
 
-const newPost = ref({
-  title: title.value,
-  body: body.value,
-  tags: tags.value
-})
+
+
+// 发布功能
+const handleSubmit = async () => {
+  const newPost = {
+    title: title.value,
+    content: content.value,
+    author: 'Eafen',
+    date: new Date().toISOString().slice(0, 10),
+    tags: tags.value
+  }
+  console.log(JSON.stringify(newPost));
+
+  try {
+    const res = await fetch('http://localhost:3002/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newPost)
+    })
+    if (!res.ok) {
+      throw new Error('网络错误')
+    }
+    const data = await res.json()
+    console.log('发布文章成功:', data)
+  } catch (error) {
+    console.error('发布文章失败:', error)
+  }
+
+}
+
 
 
 
@@ -310,5 +335,16 @@ button:hover::before {
   }
 }
 
-
+.pill {
+  display: inline-block;
+  background: var(--secondary-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  margin: 0.5rem;
+  margin-top: 1.5rem;
+}
 </style>
