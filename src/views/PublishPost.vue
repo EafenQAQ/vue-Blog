@@ -338,16 +338,5 @@ button:hover::before {
   }
 }
 
-.pill {
-  display: inline-block;
-  background: var(--secondary-accent);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: white;
-  cursor: pointer;
-  margin: 0.5rem;
-  margin-top: 1.5rem;
-}
+
 </style>
