@@ -1,0 +1,13 @@
+:root {
+  /* 网站主要颜色 */
+  --base-color: #ebba80;
+  --secondary-color: #dd9d94;
+  /* base次要颜色 */
+  --base-light: hsl(from var(--base-color) h s calc(l + 10));
+  /* base强调色 */
+  --base-accent: hsl(from var(--base-color) h s calc(l - 10));
+  /* secondary次要颜色 */
+  --secondary-light: hsl(from var(--secondary-color) h s calc(l + 10));
+  /* secondary强调色 */
+  --secondary-accent: hsl(from var(--secondary-color) h s calc(l - 10));
+}
