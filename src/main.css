@@ -6,8 +6,13 @@
   --base-light: hsl(from var(--base-color) h s calc(l + 10));
   /* base强调色 */
   --base-accent: hsl(from var(--base-color) h s calc(l - 10));
+  --base-accent-2: hsl(from var(--base-color) h s calc(l - 20));
   /* secondary次要颜色 */
   --secondary-light: hsl(from var(--secondary-color) h s calc(l + 10));
   /* secondary强调色 */
   --secondary-accent: hsl(from var(--secondary-color) h s calc(l - 10));
+}
+
+main {
+  width: 100%;
 }

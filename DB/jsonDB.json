@@ -1,0 +1,28 @@
+{
+   "posts": [
+      {
+         "id": 1,
+         "title": "Hello World",
+         "content": "This is my first post!lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+         "author": "Eafen",
+         "date": "2023-10-01",
+         "tags": ["introduction", "welcome"]
+      },
+      {
+         "id": 2,
+         "title": "Learning Vue.js",
+         "content": "Vue.js is a progressive JavaScript framework for building user interfaces.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis illum nostrum ratione qui? Ipsam a suscipit cupiditate ipsa, distinctio asperiores repellat numquam dicta, neque quod, deserunt tenetur repudiandae consequatur! Dignissimos.",
+         "author": "Eafen",
+         "date": "2023-10-02",
+            "tags": ["vue", "javascript", "framework"]
+      },
+        {
+             "id": 3,
+             "title": "Understanding Vue Router",
+             "content": "Vue Router is the official router for Vue.js, enabling navigation between views.",
+             "author": "Eafen",
+             "date": "2023-10-03",
+             "tags": ["vue", "router", "navigation"]
+        }
+   ]
+}
