@@ -15,28 +15,27 @@
  */
 
 import { ref } from 'vue'
+import { projectFirestore } from '@/firebase/config'
 
 // 获取文章数据
 const getPost = () => {
   const post = ref(null)
   const error = ref(null)
-  const uri = 'http://localhost:3002/posts/'
 
   const load = async (id) => {
     // 模拟延迟
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    // await new Promise((resolve) => setTimeout(resolve, 1000))
 
     try {
-      const res = await fetch(uri + id)
-      if (!res.ok) {
-        throw new Error('网络错误')
-      }
-      const data = await res.json()
-      console.log('获取文章数据:', data)
+      const res = await projectFirestore.collection('posts').doc(id).get()
 
-      post.value = data
+      post.value = { ...res.data(), id: id }
+      if (!res.exists) {
+        error.value = '文章不存在'
+        throw Error('文章不存在')
+      }
     } catch (error) {
-      console.error('获取文章数据失败:', error)
+      console.error(error.message)
     }
   }
 

@@ -21,14 +21,15 @@ import { projectFirestore } from '@/firebase/config'
 const getPosts = () => {
   const posts = ref([])
   const error = ref(null)
-  const uri = 'http://localhost:3002/posts'
 
   const load = async () => {
     // 模拟延迟
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    // await new Promise((resolve) => setTimeout(resolve, 1000))
 
     try {
-      const res = await projectFirestore.collection('posts').get()
+      const res = await projectFirestore.collection('posts')
+        .orderBy('createAt', 'desc')
+        .get()
       // console.log(res.docs[0].data());
       posts.value = res.docs.map((doc) => {
         return { ...doc.data(), id: doc.id }

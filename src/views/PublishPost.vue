@@ -20,6 +20,7 @@
 </template>
 
 <script setup>
+import { projectFirestore, timeStamp } from '@/firebase/config';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -50,25 +51,14 @@ const handleSubmit = async () => {
     title: title.value,
     content: content.value,
     author: 'Eafen',
-    date: new Date().toISOString().slice(0, 10),
+    createAt: timeStamp(),
     tags: tags.value
   }
   console.log(JSON.stringify(newPost));
 
-  try {
-    const res = await fetch('http://localhost:3002/posts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newPost)
-    })
-    if (!res.ok) {
-      throw new Error('网络错误')
-    }
-    const data = await res.json()
-    console.log('发布文章成功:', data)
-  } catch (error) {
-    console.error('发布文章失败:', error)
-  }
+  const res = await projectFirestore.collection('posts').add(newPost);
+  console.log("文章发布成功：", res);
+
 
   router.push('/')
 }

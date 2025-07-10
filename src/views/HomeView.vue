@@ -29,9 +29,11 @@ import PostList from '@/components/PostList.vue';
 import TagsCloud from '@/components/TagsCloud.vue';
 import getPosts from '@/composables/getPosts';
 
+
 const { posts, error, load } = getPosts();
 
 load();
+
 
 
 

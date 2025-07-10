@@ -5,7 +5,7 @@
     </RouterLink>
     <p class="post-content">{{ snippet }}</p>
     <p class="post-author">作者: {{ post.author }}</p>
-    <p class="post-date">发布日期: {{ post.date }}</p>
+    <p class="post-date">发布日期: {{ post.createAt.toDate().toLocaleDateString() }}</p>
     <div class="post-tags">
       <span class="pill" v-for="tag in post.tags" :key="tag" @click="gotoTag(tag)">
 
