@@ -49,11 +49,16 @@ const { post, error, load } = getPost();
 load(postID);
 
 const deletePost = async () => {
-  const res = await projectFirestore.collection('posts').doc(postID).delete();
-  console.log("文章删除成功：", res);
 
-  // 重定向
-  router.push({ name: 'home' })
+  if (confirm("确定要删除吗？")) {
+    const res = await projectFirestore.collection('posts').doc(postID).delete();
+    console.log("文章删除成功：", res);
+
+    // 重定向
+    router.push({ name: 'home' })
+  }
+
+
 }
 
 </script>
@@ -197,6 +202,7 @@ const deletePost = async () => {
 .post-title {
   transition: all 0.3s ease;
 }
+
 /* 删除按钮样式 */
 .delete-btn {
   background: hsl(from var(--base-accent) h s calc(l - 10) / 0);
@@ -222,5 +228,4 @@ const deletePost = async () => {
   transform: translateY(-2px);
   transition: all 0.3s ease;
 }
-
 </style>
