@@ -43,8 +43,8 @@ load(postID);
 #PostDetails {
   width: 100%;
   max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin: var(--spacing-xl) auto;
+  padding: 0 var(--spacing-md);
   min-height: 60vh;
 }
 
@@ -125,36 +125,41 @@ load(postID);
 /* 响应式设计 */
 @media (max-width: 768px) {
   #PostDetails {
-    margin: 1rem auto;
-    padding: 0 0.5rem;
+    margin: var(--spacing-md) auto;
+    padding: 0 var(--spacing-sm);
   }
 
   .post-title {
-    font-size: 2em;
-    margin: 1.5rem 0 2rem 0;
+    font-size: var(--font-3xl);
+    margin: var(--spacing-lg) 0 var(--spacing-xl) 0;
   }
 
   .post-content {
-    padding: 2rem 1.5rem;
+    padding: var(--spacing-xl) var(--spacing-lg);
   }
 
   .post-content p {
-    font-size: 1em;
+    font-size: var(--font-base);
     text-indent: 1.5em;
   }
 }
 
 @media (max-width: 480px) {
+  #PostDetails {
+    padding: 0 var(--spacing-xs);
+  }
+
   .post-title {
-    font-size: 1.6em;
-    margin: 1rem 0 1.5rem 0;
+    font-size: var(--font-2xl);
+    margin: var(--spacing-md) 0 var(--spacing-lg) 0;
   }
 
   .post-content {
-    padding: 1.5rem 1rem;
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
   .post-content p {
+    font-size: var(--font-sm);
     text-indent: 1em;
     line-height: 1.6;
   }

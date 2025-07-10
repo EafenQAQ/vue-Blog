@@ -51,54 +51,114 @@ const gotoTag = (tag) => {
 </script>
 
 <style scoped>
+/* 文章卡片容器 */
+#SinglePost {
+  width: 100%;
+  max-width: 800px;
+  margin: var(--spacing-md) auto;
+}
+
 .post {
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 8px;
-  border: dashed 2px var(--base-accent);
-
+  background: white;
+  padding: var(--spacing-xl);
+  margin: var(--spacing-lg) 0;
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--base-accent);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+/* 文章卡片悬停效果 */
+.post:hover {
+  border-color: var(--secondary-accent);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+/* 文章标题样式 */
 .post-title {
-  font-size: 1.5em;
+  font-size: var(--font-2xl);
   color: var(--base-accent-2);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.3;
+  transition: all 0.3s ease;
 }
 
-/* 悬停效果 */
 .post-title:hover {
   color: var(--base-accent);
   cursor: pointer;
 }
 
-/* 去除router-link默认样式 */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
+/* 文章内容摘要 */
 .post-content {
-  font-size: 1.2em;
+  font-size: var(--font-lg);
   color: var(--secondary-color);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
 }
 
+/* 文章元信息 */
 .post-author,
 .post-date {
-  font-size: 0.9em;
+  font-size: var(--font-sm);
   color: var(--secondary-accent);
+  font-weight: 500;
+  margin: var(--spacing-xs) 0;
 }
 
-.post-author {
-  margin-top: 10px;
+/* 标签容器 */
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
 }
 
-.post-date {
-  margin-top: 5px;
+/* 响应式设计 */
+@media (max-width: 768px) {
+  #SinglePost {
+    margin: var(--spacing-sm) auto;
+  }
+
+  .post {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md) 0;
+  }
+
+  .post-title {
+    font-size: var(--font-xl);
+  }
+
+  .post-content {
+    font-size: var(--font-base);
+  }
 }
 
-/* 宽度 */
-#SinglePost {
-  width: 100%;
-  max-width: 800px;
-  margin: 1rem auto;
+@media (max-width: 480px) {
+  .post {
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm) 0;
+  }
+
+  .post-title {
+    font-size: var(--font-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .post-content {
+    font-size: var(--font-sm);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .post-author,
+  .post-date {
+    font-size: var(--font-xs);
+  }
+
+  .post-tags {
+    margin-top: var(--spacing-sm);
+  }
 }
 </style>

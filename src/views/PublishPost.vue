@@ -83,8 +83,8 @@ const handleSubmit = async () => {
 #PublishPost {
   width: 100%;
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin: var(--spacing-xl) auto;
+  padding: 0 var(--spacing-md);
   min-height: 70vh;
 }
 
@@ -186,23 +186,23 @@ input[type="text"]:last-of-type:focus {
 /* 响应式设计 */
 @media (max-width: 768px) {
   #PublishPost {
-    margin: 1rem auto;
-    padding: 0 0.5rem;
+    margin: var(--spacing-md) auto;
+    padding: 0 var(--spacing-sm);
   }
 
   form {
-    padding: 2rem 1.5rem;
+    padding: var(--spacing-xl) var(--spacing-lg);
   }
 
   label {
-    font-size: 1em;
-    margin: 1.2rem 0 0.4rem 0;
+    font-size: var(--font-base);
+    margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
   }
 
   input[type="text"],
   textarea {
-    padding: 0.8rem;
-    font-size: 0.95em;
+    padding: var(--spacing-sm);
+    font-size: var(--font-sm);
   }
 
   textarea {
@@ -211,19 +211,23 @@ input[type="text"]:last-of-type:focus {
 }
 
 @media (max-width: 480px) {
+  #PublishPost {
+    padding: 0 var(--spacing-xs);
+  }
+
   form {
-    padding: 1.5rem 1rem;
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
   label {
-    font-size: 0.95em;
-    margin: 1rem 0 0.3rem 0;
+    font-size: var(--font-sm);
+    margin: var(--spacing-md) 0 var(--spacing-xs) 0;
   }
 
   input[type="text"],
   textarea {
-    padding: 0.7rem;
-    font-size: 0.9em;
+    padding: var(--spacing-xs);
+    font-size: var(--font-xs);
   }
 
   textarea {
@@ -337,6 +341,4 @@ button:hover::before {
     margin-top: 1.2rem;
   }
 }
-
-
 </style>
