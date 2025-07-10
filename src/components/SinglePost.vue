@@ -56,6 +56,7 @@ const gotoTag = (tag) => {
   margin: 20px 0;
   border-radius: 8px;
   border: dashed 2px var(--base-accent);
+
 }
 
 .post-title {

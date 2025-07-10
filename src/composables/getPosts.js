@@ -15,6 +15,7 @@
  */
 
 import { ref } from 'vue'
+import { projectFirestore } from '@/firebase/config'
 
 // 获取文章数据
 const getPosts = () => {
@@ -25,17 +26,15 @@ const getPosts = () => {
   const load = async () => {
     // 模拟延迟
     await new Promise((resolve) => setTimeout(resolve, 1000))
-    try {
-      const res = await fetch(uri)
-      if (!res.ok) {
-        throw new Error('网络错误')
-      }
-      const data = await res.json()
-      console.log('获取文章数据:', data)
 
-      posts.value = data
-    } catch (error) {
-      console.error('获取文章数据失败:', error)
+    try {
+      const res = await projectFirestore.collection('posts').get()
+      // console.log(res.docs[0].data());
+      posts.value = res.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id }
+      })
+    } catch (err) {
+      console.log(err.message)
     }
   }
 
