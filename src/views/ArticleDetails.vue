@@ -6,6 +6,16 @@
 
       </div>
     </template>
+    <template v-if="article">
+      <div>
+        <!-- 文章标题 -->
+      <h1 class="post-title">{{ article.title }}</h1>
+      <!-- 文章内容 -->
+      <div class="post-content">
+        <p>{{ article.content }}</p>
+      </div>
+      </div>
+    </template>
     <template v-else>
       <LoadSpinner />
     </template>
@@ -23,7 +33,7 @@ const props = defineProps({
   }
 })
 const articleID = props.id
-const { articles, error, load } = useArticle();
+const { article, error, load } = useArticle();
 
 load(articleID);
 </script>
