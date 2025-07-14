@@ -10,15 +10,7 @@
       <LoadSpinner />
     </div>
 
-    <div class="palette">
-      <div class="palette-item" style="background-color: var(--base-color);">base-color</div>
-      <div class="palette-item" style="background-color: var(--base-light);">base-light</div>
-      <div class="palette-item" style="background-color: var(--base-accent);">base-accent</div>
-      <div class="palette-item" style="background-color: var(--secondary-color);">secondary-color</div>
-      <div class="palette-item" style="background-color: var(--secondary-light);">secondary-light</div>
-      <div class="palette-item" style="background-color: var(--secondary-accent);">secondary-accent</div>
 
-    </div>
 
   </div>
 </template>
@@ -84,36 +76,11 @@ load();
 
 /* 加载状态样式 */
 #Home>div:last-child {
-  background: var(--base-light);
+
   color: var(--base-accent);
 }
 
-/* 调色板样式 */
-.palette {
-  display: flex;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-2xl);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-}
 
-.palette-item {
-  flex: 1;
-  padding: var(--spacing-lg);
-  color: white;
-  text-align: center;
-  font-weight: 600;
-  font-size: var(--font-sm);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.palette-item:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-  z-index: 1;
-}
 
 /* 响应式设计 */
 @media (max-width: 768px) {
