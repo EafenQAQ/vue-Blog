@@ -25,6 +25,11 @@ const router = createRouter({
       name: 'tag',
       component: () => import('../views/FilteredPosts.vue'),
     },
+    {
+      path: '/psych',
+      name: 'psych',
+      component: () => import('../views/PsychArticles.vue'),
+    },
   ],
 })
 
