@@ -15,10 +15,11 @@
 import PostList from '@/components/PostList.vue';
 import TagsCloud from '@/components/TagsCloud.vue';
 import LoadSpinner from '@/components/LoadSpinner.vue';
-import getArticles from '@/composables/getArticles';
+import useArticles from '@/composables/useArticles';
 
 
-const { articles, error, load } = getArticles();
+
+const { articles, error, load } = useArticles();
 
 load();
 

@@ -15,7 +15,7 @@ const unpackData = (data) => {
 }
 
 // 获取文章数据
-const getArticles = () => {
+const useArticles = () => {
   const articles = ref([])
   const error = ref(null)
 
@@ -35,4 +35,4 @@ const getArticles = () => {
   }
   return { articles, error, load }
 }
-export default getArticles
+export default useArticles

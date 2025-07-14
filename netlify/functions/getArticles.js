@@ -27,18 +27,6 @@ exports.handler = async (event, context) => {
       page_size: 3,
     })
 
-    // // 格式化数据
-    // const articles = res.results.map((page) => {
-    //   return {
-    //     id: page.id,
-    //     title: page.properties.文章标题.title[0]?.plain_text || '无标题',
-    //     summary: page.properties.文章摘要.rich_text[0]?.plain_text || '',
-    //     tags: page.properties.tags.multi_select.map((tag) => tag.name),
-    //     createdTime: page.properties.创建时间.created_time,
-    //     cover: page.cover?.external?.url || page.cover?.file?.url || null,
-    //   }
-    // })
-
     // 返回成功响应
     return {
       statusCode: 200,

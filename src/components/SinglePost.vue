@@ -1,6 +1,6 @@
 <template>
   <div id="SinglePost" class="post">
-    <RouterLink :to="{ name: 'post', params: { id: post.id } }">
+    <RouterLink :to="{ name: 'article', params: { id: post.id } }">
       <h2 class="post-title">{{ post.title }}</h2>
     </RouterLink>
     <p class="post-content">{{ snippet }}</p>
