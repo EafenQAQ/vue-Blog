@@ -2,7 +2,7 @@
   <nav id="NavBar">
     <router-link to="/">主页</router-link>
     <router-link to="/publish">发布</router-link>
-    <router-link to="/psych">心理文章</router-link>
+    <router-link to="/psych">心理学科普专栏</router-link>
   </nav>
 </template>
 
