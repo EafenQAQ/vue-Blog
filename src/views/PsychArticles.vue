@@ -2,8 +2,8 @@
   <div id="PsychArticles">
     <div v-if="error">{{ error }}</div>
     <div v-if="articles.length" class="layout">
-      <PostList />
-      <TagsCloud />
+      <PostList :posts="articles" />
+      <!-- <TagsCloud /> -->
     </div>
     <div v-else>
       <LoadSpinner />
@@ -15,9 +15,14 @@
 import PostList from '@/components/PostList.vue';
 import TagsCloud from '@/components/TagsCloud.vue';
 import LoadSpinner from '@/components/LoadSpinner.vue';
-import { ref } from 'vue';
+import useArticles from '@/composables/useArticles';
 
-const articles = ref([])
+
+
+const { articles, error, load } = useArticles();
+
+load();
+
 </script>
 
 <style lang="scss" scoped></style>

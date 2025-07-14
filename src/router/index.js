@@ -30,6 +30,12 @@ const router = createRouter({
       name: 'psych',
       component: () => import('../views/PsychArticles.vue'),
     },
+    {
+      path: '/article/:id',
+      name: 'article',
+      component: () => import('../views/ArticleDetails.vue'),
+      props: true,
+    },
   ],
 })
 

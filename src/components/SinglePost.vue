@@ -1,11 +1,11 @@
 <template>
   <div id="SinglePost" class="post">
-    <RouterLink :to="{ name: 'post', params: { id: post.id } }">
+    <RouterLink :to="{ name: 'article', params: { id: post.id } }">
       <h2 class="post-title">{{ post.title }}</h2>
     </RouterLink>
     <p class="post-content">{{ snippet }}</p>
-    <p class="post-author">作者: {{ post.author }}</p>
-    <p class="post-date">发布日期: {{ post.createAt.toDate().toLocaleDateString() }}</p>
+    <p v-if="post.author" class="post-author">作者: {{ post.author }} </p>
+    <p class="post-date">发布日期: {{ postDate }}</p>
     <div class="post-tags">
       <span class="pill" v-for="tag in post.tags" :key="tag" @click="gotoTag(tag)">
 
@@ -30,6 +30,15 @@ const props = defineProps({
     required: true
   }
 });
+
+// 根据情况计算日期数据
+const postDate = computed(() => {
+  if (typeof props.post.createAt === 'string') {
+    return new Date(props.post.createAt).toLocaleDateString();
+  } else {
+    return props.post.createAt.toDate().toLocaleDateString();
+  }
+})
 
 const snippet = computed(
   () => {

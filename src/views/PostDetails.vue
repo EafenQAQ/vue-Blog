@@ -31,6 +31,7 @@
 import LoadSpinner from '@/components/LoadSpinner.vue';
 
 import getPost from '@/composables/getPost';
+import useArticle from '@/composables/useArticle';
 import { projectFirestore } from '@/firebase/config';
 import { useRouter } from 'vue-router';
 
