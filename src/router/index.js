@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
+const requireConfirm = (to, from, next) => {
+  if (from.path === '/psych') {
+    next({ name: 'article', params: { id: to.params.id } })
+  } else next()
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -14,6 +20,7 @@ const router = createRouter({
       name: 'post',
       component: () => import('../views/PostDetails.vue'),
       props: true,
+      beforeEnter: requireConfirm,
     },
     {
       path: '/publish',
