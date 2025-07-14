@@ -175,3 +175,12 @@ a {
     font-size: var(--font-xl);
   }
 }
+
+.page-content {
+  /* 响应式的宽度设计 */
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  min-height: 60vh;
+}

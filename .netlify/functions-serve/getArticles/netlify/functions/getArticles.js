@@ -1285,7 +1285,7 @@ exports.handler = async (event, context) => {
           direction: "descending"
         }
       ],
-      page_size: 3
+      page_size: 15
     });
     console.log("Query successful, returning data");
     return {
