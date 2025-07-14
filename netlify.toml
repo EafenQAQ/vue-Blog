@@ -2,7 +2,7 @@
 
 # [build] 部分是告诉 Netlify 如何构建你的生产版本
 [build]
-  command = "npm run build"      # 构建命令 (Vite/Vue CLI 默认)
+  command = "npm run build && cd netlify/functions && npm install"      # 构建命令 (Vite/Vue CLI 默认)
   functions = "netlify/functions" # 函数所在的目录
   publish = "dist"               # 构建后静态文件输出的目录 (Vite/Vue CLI 默认)
 
@@ -11,3 +11,7 @@
   command = "npm run dev"  # 启动 Vue 开发服务器的命令
   targetPort = 5173        # Vue 开发服务器的端口 (Vite 默认是 5173)
   port = 8888              # Netlify Dev 为你启动的统一访问端口
+
+# 函数配置
+[functions]
+  node_bundler = "esbuild"
