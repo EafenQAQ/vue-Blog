@@ -10,7 +10,7 @@ const unpackData = (page) => {
       summary: item.properties.文章摘要.rich_text[0]?.plain_text || '',
       content: item.properties.文章内容.rich_text[0]?.plain_text || '',
       createAt: item.properties.创建时间.created_time,
-      tags: item.properties.tags.rich_text.map((tag) => tag.plain_text),
+      tags: item.properties.tags.multi_select.map((tag) => tag.name),
     }
   })
 }
