@@ -56,7 +56,7 @@ exports.handler = async (event, context) => {
       database_id: process.env.NOTION_DATABASE_ID,
       filter: {
         property: 'tags',
-        rich_text: {
+        multi_select: {
           contains: tag,
         },
       },
