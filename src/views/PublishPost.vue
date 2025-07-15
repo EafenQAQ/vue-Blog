@@ -20,9 +20,10 @@
 </template>
 
 <script setup>
-import { projectFirestore, timeStamp } from '@/firebase/config';
+import { timeStamp } from '@/firebase/config';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 const router = useRouter();
 
@@ -51,12 +52,12 @@ const handleSubmit = async () => {
     title: title.value,
     content: content.value,
     author: 'Eafen',
-    createAt: timeStamp(),
-    tags: tags.value
+    tags: tags.value ? tags.value.join(' ') : '' // 将数组转换为字符串
   }
   console.log(JSON.stringify(newPost));
 
-  const res = await projectFirestore.collection('posts').add(newPost);
+  const res = await axios.post('https://ssr233.site/v1/posts/create', newPost)
+
   console.log("文章发布成功：", res);
 
 

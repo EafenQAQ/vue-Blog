@@ -1,21 +1,21 @@
-/**
- * @file getPost.js
- * @description
- * 这是一个 Vue 3 的自定义组合式函数（composable），用于从接口获取“单篇”博客文章数据。
- * 使用了 Vue 的响应式 API（ref）来管理文章数据和错误状态。
- *
- * 使用方式（在组件中）：
- * const { post, error, load } = getPost();
- * load(); // 调用后会从指定 URI 加载文章数据
- *
- * 返回值：
- * - post：存储文章列表
- * - error：响应式变量，存储错误信息（当前未被赋值使用）
- * - load：异步函数，执行网络请求获取数据
- */
+
 
 import { ref } from 'vue'
-import { projectFirestore } from '@/firebase/config'
+import axios from 'axios'
+
+const BASE_URL = 'https://ssr233.site/'
+
+// 解包数据
+const unpackData = (responseData) => {
+  return {
+    id:responseData.data.id,
+    title:responseData.data.title,
+    content:responseData.data.content,
+    author:responseData.data.author,
+    tags: responseData.data.tags ? responseData.data.tags.split(' ') : [], // 将字符串转换为数组
+    createAt:responseData.data.created_at,
+  }
+}
 
 // 获取文章数据
 const getPost = () => {
@@ -26,17 +26,19 @@ const getPost = () => {
     // 模拟延迟
     // await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    try {
-      const res = await projectFirestore.collection('posts').doc(id).get()
+   try {
+    const res = await axios.get(BASE_URL + 'v1/posts/' + id)
 
-      post.value = { ...res.data(), id: id }
-      if (!res.exists) {
-        error.value = '文章不存在'
-        throw Error('文章不存在')
-      }
-    } catch (error) {
-      console.error(error.message)
-    }
+
+    console.log('从后端获取的数据是：', res.data)
+
+    post.value = unpackData(res.data)
+    console.log('解包后的数据是:', post.value)
+   }catch (err) {
+    console.log(err.message)
+    error.value = err.message
+   }
+
   }
 
   return { post, error, load }
