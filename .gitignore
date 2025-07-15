@@ -31,4 +31,10 @@ coverage
 
 # Local Netlify folder
 .netlify
+.netlify/
+*.map
+functions-serve/
+.netlify/functions-serve/
+
+
 .env
