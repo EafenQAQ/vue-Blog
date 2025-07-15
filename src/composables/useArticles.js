@@ -10,6 +10,7 @@ const unpackData = (data) => {
       summary: page.properties.文章摘要.rich_text[0]?.plain_text || '',
       content: page.properties.文章内容.rich_text[0]?.plain_text || '',
       createAt: page.properties.创建时间.created_time,
+      tags: page.properties.tags.rich_text.map((tag) => tag.plain_text),
     }
   })
 }
@@ -25,7 +26,7 @@ const useArticles = () => {
 
     try {
       const res = await axios.get('/.netlify/functions/getArticles')
-
+      console.log('从Notion返回的数据是：', res.data)
       articles.value = unpackData(res.data)
       console.log('解包后的数据是', articles.value)
     } catch (err) {
