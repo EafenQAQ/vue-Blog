@@ -1,7 +1,7 @@
 <template>
   <div id="FilteredPosts">
     <template v-if="error">{{ error }}</template>
-    <template v-if="posts.length">
+    <template v-if="posts.length || articles.length">
 
       <div class="layout">
         <div class="postList">
@@ -10,7 +10,7 @@
             <SinglePost :post="post" />
           </div>
         </div>
-        <TagsCloud :posts="posts" />
+        <TagsCloud :posts="sourceType === 'blog' ? posts : articles" />
       </div>
 
     </template>
@@ -28,9 +28,11 @@ import SinglePost from '@/components/SinglePost.vue';
 import LoadSpinner from '@/components/LoadSpinner.vue';
 import { computed, ref, watch } from 'vue';
 import TagsCloud from '@/components/TagsCloud.vue';
+import useArticles from '@/composables/useArticles';
 
 const route = useRoute();
 const tag = ref(route.params.tag);
+const sourceType = ref(route.query.source || 'blog')
 
 // 监听路由参数变化
 watch(() => route.params.tag
@@ -38,18 +40,48 @@ watch(() => route.params.tag
     tag.value = newTag;
   });
 
-const { posts, error, load } = getPosts();
+// 根据条件获取不同来源的文章数据
+const { posts, error: postsError, load: loadPosts } = getPosts();
+const { articles, error: articlesError, load: loadArticles } = useArticles();
 
-load();
+if (sourceType.value === 'blog') {
+  loadPosts();
+} else if (sourceType.value === 'psych') {
+  loadArticles();
+} else {
+  loadPosts();
+}
+
+const error = computed(() => {
+  if (sourceType.value === 'blog') {
+    return postsError.value;
+  } else if (sourceType.value === 'psych') {
+    return articlesError.value;
+  } else {
+    return postsError.value;
+  }
+}
+)
 
 // 监听路由参数的变化
 
 
 const filteredPosts = computed(() => {
-  return posts.value.filter(post =>
-    post.tags.includes(tag.value)
+  if (sourceType.value === 'blog') {
+    return posts.value.filter(post =>
+      post.tags.includes(tag.value)
 
-  )
+    )
+  } else if (sourceType.value === 'psych') {
+    return articles.value.filter(article =>
+      article.tags.includes(tag.value)
+    )
+  } else {
+    return posts.value.filter(post =>
+      post.tags.includes(tag.value)
+    )
+  }
+
 }
 )
 

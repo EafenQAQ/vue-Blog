@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 const requireConfirm = (to, from, next) => {
-  if (from.path === '/psych') {
+  if (from.path === '/psych' || from.path.startsWith('/tag/')) {
     next({ name: 'article', params: { id: to.params.id } })
   } else next()
 }

@@ -3,7 +3,7 @@
     <div v-if="error">{{ error }}</div>
     <div v-if="articles.length" class="layout">
       <PostList :posts="articles" />
-      <!-- <TagsCloud /> -->
+      <TagsCloud :posts="articles" sourceType="psych" />
     </div>
     <div v-else>
       <LoadSpinner />
