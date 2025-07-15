@@ -20,7 +20,6 @@
 </template>
 
 <script setup>
-import { timeStamp } from '@/firebase/config';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
@@ -33,6 +32,8 @@ const tag = ref('');
 const tags = ref([])
 
 const addTag = () => {
+  if (!tag.value.trim()) return;
+
   if (!tags.value.includes(tag.value)) {
     tags.value.push(tag.value.trim());
     tag.value = '';
