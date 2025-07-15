@@ -15,7 +15,28 @@
  */
 
 import { ref } from 'vue'
-import { projectFirestore } from '@/firebase/config'
+import axios from 'axios'
+
+const BASE_URL = 'https://ssr233.site/'
+
+//解包数据
+const unpackData = (responseData) => {
+  if (!responseData.success || !responseData.data) {
+    return []
+  }
+
+  return responseData.data.map((item) => {
+    return {
+      id: item.id,
+      title: item.title || '无标题',
+      content: item.content || '',
+      author: item.author || '',
+      tags: item.tags ? item.tags.split(' ') : [], // 将字符串转换为数组
+      createAt: item.created_at, // 映射字段名
+    }
+  })
+}
+
 
 // 获取文章数据
 const getPosts = () => {
@@ -27,15 +48,15 @@ const getPosts = () => {
     // await new Promise((resolve) => setTimeout(resolve, 1000))
 
     try {
-      const res = await projectFirestore.collection('posts')
-        .orderBy('createAt', 'desc')
-        .get()
-      // console.log(res.docs[0].data());
-      posts.value = res.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id }
-      })
+      const res = await axios.get(BASE_URL + 'v1/posts/list')
+
+      console.log('从后端获取的数据是：', res.data)
+
+      posts.value = unpackData(res.data)
+      console.log('解包后的数据是:', posts.value)
     } catch (err) {
-      console.log(err.message)
+      console.error(err.message)
+      error.value = err.message
     }
   }
 
