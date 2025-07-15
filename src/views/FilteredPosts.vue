@@ -1,7 +1,8 @@
 <template>
   <div id="FilteredPosts">
     <template v-if="error">{{ error }}</template>
-    <template v-if="posts.length || articles.length">
+    <!-- 博客文章 -->
+    <template v-else-if="posts.length">
 
       <div class="layout">
         <div class="postList">
@@ -10,10 +11,25 @@
             <SinglePost :post="post" />
           </div>
         </div>
-        <TagsCloud :posts="sourceType === 'blog' ? posts : articles" />
+        <TagsCloud :posts="posts" />
       </div>
 
     </template>
+
+    <!-- Notion中的文章 -->
+    <template v-else-if="filteredArticles.length">
+      <div class="layout">
+        <div class="postList">
+          <p>包含「 {{ tag }} 」标签的文章有 {{ filteredArticles.length }} 篇：</p>
+          <div v-for="post in filteredArticles" :key="post.id">
+            <SinglePost :post="post" />
+          </div>
+        </div>
+        <TagsCloud :posts="posts" />
+      </div>
+
+    </template>
+
     <template v-else>
       <LoadSpinner />
     </template>
@@ -28,62 +44,46 @@ import SinglePost from '@/components/SinglePost.vue';
 import LoadSpinner from '@/components/LoadSpinner.vue';
 import { computed, ref, watch } from 'vue';
 import TagsCloud from '@/components/TagsCloud.vue';
-import useArticles from '@/composables/useArticles';
+import filterArticles from '@/composables/filterArticles';
 
 const route = useRoute();
 const tag = ref(route.params.tag);
-const sourceType = ref(route.query.source || 'blog')
-
+const error = ref(null)
 // 监听路由参数变化
 watch(() => route.params.tag
   , (newTag) => {
     tag.value = newTag;
   });
 
-// 根据条件获取不同来源的文章数据
-const { posts, error: postsError, load: loadPosts } = getPosts();
-const { articles, error: articlesError, load: loadArticles } = useArticles();
+// 获取文章数据
+const { posts, error: getPostsError, load: loadPosts } = getPosts();
+const { filteredArticles, error: articlesError, load: loadArticles } = filterArticles();
 
-if (sourceType.value === 'blog') {
+if (route.query.source === 'psych') {
+  loadArticles(tag.value);
+  error.value = articlesError.value;
+} else if (route.query.source === 'blog') {
   loadPosts();
-} else if (sourceType.value === 'psych') {
-  loadArticles();
+  error.value = getPostsError.value;
 } else {
   loadPosts();
+  error.value = getPostsError.value;
 }
 
-const error = computed(() => {
-  if (sourceType.value === 'blog') {
-    return postsError.value;
-  } else if (sourceType.value === 'psych') {
-    return articlesError.value;
-  } else {
-    return postsError.value;
-  }
-}
-)
+
+
+
+
+
 
 // 监听路由参数的变化
 
-
+// 过滤包含特定标签的文章
 const filteredPosts = computed(() => {
-  if (sourceType.value === 'blog') {
-    return posts.value.filter(post =>
-      post.tags.includes(tag.value)
-
-    )
-  } else if (sourceType.value === 'psych') {
-    return articles.value.filter(article =>
-      article.tags.includes(tag.value)
-    )
-  } else {
-    return posts.value.filter(post =>
-      post.tags.includes(tag.value)
-    )
-  }
-
-}
-)
+  return posts.value.filter(post =>
+    post.tags.includes(tag.value)
+  )
+})
 
 </script>
 

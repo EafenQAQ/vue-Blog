@@ -1,7 +1,7 @@
 <template>
   <div id="TagsCloud">
     <div class="pill" v-for="tag in tags" :key="tag">
-      <RouterLink :to="{ name: 'tag', params: { tag: tag }, query:{ source: sourceType } }"># {{ tag }}</RouterLink>
+      <RouterLink :to="{ name: 'tag', params: { tag: tag }, query: { source: sourceType } }"># {{ tag }}</RouterLink>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@ const props = defineProps({
   },
   sourceType: {
     type: String,
-    required: true
+    required: false
   }
 });
 
