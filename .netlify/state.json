@@ -1,5 +1,4 @@
 {
-	"siteId": "8b1f8f0c-aad6-44ca-b259-386c489e0efa",
 	"geolocation": {
 		"data": {
 			"city": "Kuala Lumpur",
@@ -16,6 +15,6 @@
 			"longitude": 101.6708,
 			"postalCode": "50480"
 		},
-		"timestamp": 1752648339036
+		"timestamp": 1752648387141
 	}
 }
