@@ -17,7 +17,7 @@
     </template>
 
     <!-- Notion中的文章 -->
-    <template v-else-if="filteredArticles.length">
+    <template v-else-if="articles.length">
       <div class="layout">
         <div class="postList">
           <p>包含「 {{ tag }} 」标签的文章有 {{ filteredArticles.length }} 篇：</p>
@@ -25,7 +25,7 @@
             <SinglePost :post="post" />
           </div>
         </div>
-        <TagsCloud :posts="posts" />
+        <TagsCloud :posts="posts.length ? posts : articles" />
       </div>
 
     </template>
@@ -44,7 +44,7 @@ import SinglePost from '@/components/SinglePost.vue';
 import LoadSpinner from '@/components/LoadSpinner.vue';
 import { computed, ref, watch } from 'vue';
 import TagsCloud from '@/components/TagsCloud.vue';
-import filterArticles from '@/composables/filterArticles';
+import useArticles from '@/composables/useArticles';
 
 const route = useRoute();
 const tag = ref(route.params.tag);
@@ -57,10 +57,10 @@ watch(() => route.params.tag
 
 // 获取文章数据
 const { posts, error: getPostsError, load: loadPosts } = getPosts();
-const { filteredArticles, error: articlesError, load: loadArticles } = filterArticles();
+const { articles, error: articlesError, load: loadArticles } = useArticles();
 
 if (route.query.source === 'psych') {
-  loadArticles(tag.value);
+  loadArticles();
   error.value = articlesError.value;
 } else if (route.query.source === 'blog') {
   loadPosts();
@@ -76,12 +76,19 @@ if (route.query.source === 'psych') {
 
 
 
-// 监听路由参数的变化
+
 
 // 过滤包含特定标签的文章
 const filteredPosts = computed(() => {
   return posts.value.filter(post =>
     post.tags.includes(tag.value)
+  )
+})
+
+// 过滤包含articles
+const filteredArticles = computed(() => {
+  return articles.value.filter(article =>
+    article.tags.includes(tag.value)
   )
 })
 

@@ -4,7 +4,7 @@
 
     <!-- 文章详情 -->
     <div class="postList" v-for="post in posts" :key="post.id">
-      <SinglePost :post="post" />
+      <SinglePost :post="post" :sourceType=sourceType />
     </div>
 
 
@@ -19,6 +19,10 @@ const props = defineProps({
   posts: {
     type: Array,
     required: true
+  },
+  sourceType: {
+    type: String,
+    required: false
   }
 });
 
@@ -40,7 +44,7 @@ const props = defineProps({
   margin-bottom: var(--spacing-xl);
   position: relative;
 }
-/* 
+/*
 标题装饰线
 #PostList h2::after {
   content: '';

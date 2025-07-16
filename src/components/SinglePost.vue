@@ -28,6 +28,10 @@ const props = defineProps({
   post: {
     type: Object,
     required: true
+  },
+  sourceType: {
+    type: String,
+    required: false
   }
 });
 
@@ -53,7 +57,7 @@ const snippet = computed(
 )
 
 const gotoTag = (tag) => {
-  router.push({ name: 'tag', params: { tag: tag } })
+  router.push({ name: 'tag', params: { tag: tag }, query: { source: props.sourceType } })
 }
 
 

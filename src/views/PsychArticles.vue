@@ -2,7 +2,7 @@
   <div id="PsychArticles">
     <div v-if="error">{{ error }}</div>
     <div v-if="articles.length" class="layout">
-      <PostList :posts="articles" />
+      <PostList :posts="articles" sourceType="psych" />
       <TagsCloud :posts="articles" sourceType="psych" />
     </div>
     <div v-else>
