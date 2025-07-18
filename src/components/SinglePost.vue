@@ -1,7 +1,7 @@
 <template>
   <div id="SinglePost" class="post">
     <RouterLink :to="{ name: 'post', params: { id: post.id } }">
-      <img v-if="post.cover" :src="post.cover" alt="封面加载失败">
+      <img v-if="post.cover" :src="post.cover" alt="封面加载失败" loading="lazy">
       <h2 class="post-title">{{ post.title }}</h2>
     </RouterLink>
 
