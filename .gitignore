@@ -39,5 +39,4 @@ functions-serve/
 
 .env
 .netlify/state.json
-.netlify/state.json
 .netlify/functions-serve/getArticles/netlify/functions/getArticles.js.map

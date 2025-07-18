@@ -1,20 +1,16 @@
 {
 	"geolocation": {
 		"data": {
-			"city": "Kuala Lumpur",
+			"city": "Singapore",
 			"country": {
-				"code": "MY",
-				"name": "Malaysia"
+				"code": "SG",
+				"name": "Singapore"
 			},
-			"subdivision": {
-				"code": "14",
-				"name": "Kuala Lumpur"
-			},
-			"timezone": "Asia/Kuala_Lumpur",
-			"latitude": 3.1671,
-			"longitude": 101.6708,
-			"postalCode": "50480"
+			"timezone": "Asia/Singapore",
+			"latitude": 1.2823,
+			"longitude": 103.8557,
+			"postalCode": "01"
 		},
-		"timestamp": 1752649693368
+		"timestamp": 1752811942902
 	}
 }

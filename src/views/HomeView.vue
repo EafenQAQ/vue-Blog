@@ -10,7 +10,7 @@
       <LoadSpinner />
     </div>
 
-
+    <div ref="sentinel"></div>
 
   </div>
 </template>
@@ -20,15 +20,45 @@ import LoadSpinner from '@/components/LoadSpinner.vue';
 import PostList from '@/components/PostList.vue';
 import TagsCloud from '@/components/TagsCloud.vue';
 import getPosts from '@/composables/getPosts';
+import { onMounted, onUnmounted, ref } from 'vue';
 
+// 哨兵元素
+const sentinel = ref(null)
 
 const { posts, error, load } = getPosts();
 
 load();
 
+const handleIntersection = (entries) => {
+  entries.forEach((entry) => {
+    console.log('isIntersecting? :', entry.isIntersecting)
+    if (entry.isIntersecting) {
+
+      console.log('进入视口了')
+
+      // 在这里需要一个LoadMoreItems.js的逻辑
+    }
+  }
+  )
 
 
+}
 
+
+const observer = new IntersectionObserver(handleIntersection
+  , {
+    rootMargin: '0px 0px 100px 0px',
+  })
+
+onMounted(() => {
+  observer.observe(sentinel.value)
+}
+)
+
+onUnmounted(() => {
+  observer.disconnect()
+}
+)
 
 </script>
 
