@@ -7,36 +7,24 @@
       <!-- 文章标题 -->
       <h1 class="post-title">{{ post.title }}</h1>
       <!-- 文章内容 -->
-      <div class="post-content">
-        <p>{{ post.content }}</p>
+      <div v-html="htmlContent" class="post-content">
+
       </div>
     </template>
     <template v-else>
       <LoadSpinner />
     </template>
-    <!-- 删除按钮 -->
-    <!-- <button class="delete-btn" @click="deletePost">
-      <svg t="1752128415990" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        p-id="4964" width="32" height="32">
-        <path
-          d="M597.333333 256V213.333333h-170.666666v42.666667H260.266667a4.266667 4.266667 0 0 0-4.266667 4.266667v76.8a4.266667 4.266667 0 0 0 4.266667 4.266666h503.466666a4.266667 4.266667 0 0 0 4.266667-4.266666V260.266667a4.266667 4.266667 0 0 0-4.266667-4.266667H597.333333zM302.933333 810.666667h418.133334a4.266667 4.266667 0 0 0 4.266666-4.266667v-375.466667a4.266667 4.266667 0 0 0-4.266666-4.266666H302.933333a4.266667 4.266667 0 0 0-4.266666 4.266666v375.466667a4.266667 4.266667 0 0 0 4.266666 4.266667z"
-          p-id="4965" fill="#d81e06"></path>
-      </svg>
-      <span>删除博客</span>
-    </button> -->
+
   </div>
 
 </template>
 
 <script setup>
 import LoadSpinner from '@/components/LoadSpinner.vue';
-
 import getPost from '@/composables/getPost';
-import useArticle from '@/composables/useArticle';
-import { projectFirestore } from '@/firebase/config';
-import { useRouter } from 'vue-router';
+import { marked } from 'marked';
+import { computed } from 'vue';
 
-const router = useRouter();
 
 const props = defineProps({
   id: {
@@ -50,18 +38,12 @@ const { post, error, load } = getPost();
 
 load(postID);
 
-const deletePost = async () => {
-
-  if (confirm("确定要删除吗？")) {
-    const res = await projectFirestore.collection('posts').doc(postID).delete();
-    console.log("文章删除成功：", res);
-
-    // 重定向
-    router.push({ name: 'home' })
-  }
-
-
+const htmlContent = computed(() => {
+  if (post.value && post.value.content) {
+    return marked(post.value.content);
+  } else return ''
 }
+)
 
 </script>
 
