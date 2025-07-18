@@ -18,6 +18,7 @@ const useArticles = () => {
         content: page.properties.文章内容.rich_text[0]?.plain_text || '',
         createAt: page.properties.创建时间.created_time,
         tags: page.properties.tags.multi_select.map((tag) => tag.name),
+        cover: page.properties['Files & media'].files[0].external.url
       }
     })
 

@@ -1,9 +1,10 @@
 <template>
   <div id="SinglePost" class="post">
     <RouterLink :to="{ name: 'post', params: { id: post.id } }">
+      <img v-if="post.cover" :src="post.cover" alt="封面加载失败">
       <h2 class="post-title">{{ post.title }}</h2>
     </RouterLink>
-    <p class="post-content">{{ snippet }}</p>
+
     <p v-if="post.author" class="post-author">作者: {{ post.author }} </p>
     <p class="post-date">发布日期: {{ postDate }}</p>
     <div class="post-tags">
@@ -46,15 +47,15 @@ const postDate = computed(() => {
   }
 })
 
-const snippet = computed(
-  () => {
-    // 截取前100个字符作为摘要
-    return props.post.content.length > 100
-      ? props.post.content.slice(0, 100) + '...'
-      : props.post.content;
-  }
+// const snippet = computed(
+//   () => {
+//     // 截取前100个字符作为摘要
+//     return props.post.content.length > 100
+//       ? props.post.content.slice(0, 100) + '...'
+//       : props.post.content;
+//   }
 
-)
+// )
 
 const gotoTag = (tag) => {
   router.push({ name: 'tag', params: { tag: tag }, query: { source: props.sourceType } })
@@ -175,5 +176,14 @@ const gotoTag = (tag) => {
   .post-tags {
     margin-top: var(--spacing-sm);
   }
+}
+
+/* 封面图 */
+.post img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-md);
 }
 </style>
