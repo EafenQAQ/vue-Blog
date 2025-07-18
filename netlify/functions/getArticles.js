@@ -43,9 +43,12 @@ exports.handler = async (event, context) => {
     }
   }
 
+  // 接收cursor请求参数
+  const { cursor } = event.queryStringParameters || {}
+
   try {
     console.log('Querying Notion database...')
-    const res = await notion.databases.query({
+    const queryBody = {
       database_id: databaseId,
       sorts: [
         {
@@ -53,8 +56,13 @@ exports.handler = async (event, context) => {
           direction: 'descending',
         },
       ],
-      page_size: 15,
-    })
+      page_size: 10,
+    }
+    if (cursor) {
+      queryBody.start_cursor = cursor
+    }
+
+    const res = await notion.databases.query(queryBody)
 
     console.log('Query successful, returning data')
     // 返回成功响应
