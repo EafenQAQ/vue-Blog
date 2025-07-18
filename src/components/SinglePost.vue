@@ -1,7 +1,7 @@
 <template>
   <div id="SinglePost" class="post">
     <RouterLink :to="{ name: 'post', params: { id: post.id } }">
-      <img v-if="post.cover" :src="post.cover" alt="封面加载失败" loading="lazy">
+      <OptimizedImage v-if="post.cover" :src="post.cover" :width="800" />
       <h2 class="post-title">{{ post.title }}</h2>
     </RouterLink>
 
@@ -21,6 +21,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import OptimizedImage from './OptimizedImage.vue';
 
 const router = useRouter();
 
@@ -176,14 +177,5 @@ const gotoTag = (tag) => {
   .post-tags {
     margin-top: var(--spacing-sm);
   }
-}
-
-/* 封面图 */
-.post img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  margin-bottom: var(--spacing-md);
 }
 </style>
