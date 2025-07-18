@@ -15,3 +15,16 @@
 # 函数配置
 [functions]
   node_bundler = "esbuild"
+
+[images]
+  # 定义一个允许的远程图片源列表
+  # 这里使用的是正则表达式
+  remote_images = [
+    # 允许来自 psypost.org 的图片
+    # 正则表达式需要转义点号（.）
+    "^https://www.psypost\\.org/.*",
+
+    
+    # 这样 Notion 中直接上传的图片也能正常处理
+    "^https://s3\\.us-west-2\\.amazonaws\\.com/secure\\.notion-static\\.com/.*"
+  ]

@@ -1,9 +1,10 @@
 <template>
   <div id="SinglePost" class="post">
     <RouterLink :to="{ name: 'post', params: { id: post.id } }">
+      <OptimizedImage v-if="post.cover" :src="post.cover" :width="800" />
       <h2 class="post-title">{{ post.title }}</h2>
     </RouterLink>
-    <p class="post-content">{{ snippet }}</p>
+    <p class="snippet">{{ snippet }}</p>
     <p v-if="post.author" class="post-author">作者: {{ post.author }} </p>
     <p class="post-date">发布日期: {{ postDate }}</p>
     <div class="post-tags">
@@ -20,6 +21,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import OptimizedImage from './OptimizedImage.vue';
 
 const router = useRouter();
 
@@ -175,5 +177,9 @@ const gotoTag = (tag) => {
   .post-tags {
     margin-top: var(--spacing-sm);
   }
+}
+
+.snippet {
+  font-size: 0.9rem;
 }
 </style>
