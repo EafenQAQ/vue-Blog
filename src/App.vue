@@ -25,7 +25,13 @@
         </span>
       </h1>
       <NavBar />
-      <router-view />
+
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view> 
+
     </main>
     <FooterBar />
   </div>
@@ -89,5 +95,17 @@ main>h1 {
   main>h1 {
     font-size: var(--font-2xl);
   }
+}
+
+/* Transition效果 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
 }
 </style>
