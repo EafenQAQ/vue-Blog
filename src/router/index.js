@@ -22,11 +22,11 @@ const router = createRouter({
       props: true,
       beforeEnter: requireConfirm,
     },
-    // {
-    //   path: '/publish',
-    //   name: 'publish',
-    //   component: () => import('../views/PublishPost.vue'),
-    // },
+    {
+      path: '/publish',
+      name: 'publish',
+      component: () => import('../views/PublishPost.vue'),
+    },
     {
       path: '/tag/:tag',
       name: 'tag',
@@ -43,6 +43,11 @@ const router = createRouter({
       component: () => import('../views/ArticleDetails.vue'),
       props: true,
     },
+    {
+      path: '/manage',
+      name: 'manage',
+      component: () => import('../views/PostsManager.vue'),
+    }
   ],
 })
 

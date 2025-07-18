@@ -1,8 +1,9 @@
 <template>
   <nav id="NavBar">
     <router-link to="/">主页</router-link>
-    
     <router-link to="/psych">心理·科学</router-link>
+    <router-link :to="{ name: 'publish' }">发布</router-link>
+    <router-link :to="{ name: 'manage' }">文章管理</router-link>
   </nav>
 </template>
 
