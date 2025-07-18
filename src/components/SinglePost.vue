@@ -4,7 +4,7 @@
       <OptimizedImage v-if="post.cover" :src="post.cover" :width="800" />
       <h2 class="post-title">{{ post.title }}</h2>
     </RouterLink>
-
+    <p class="snippet">{{ snippet }}</p>
     <p v-if="post.author" class="post-author">作者: {{ post.author }} </p>
     <p class="post-date">发布日期: {{ postDate }}</p>
     <div class="post-tags">
@@ -48,15 +48,15 @@ const postDate = computed(() => {
   }
 })
 
-// const snippet = computed(
-//   () => {
-//     // 截取前100个字符作为摘要
-//     return props.post.content.length > 100
-//       ? props.post.content.slice(0, 100) + '...'
-//       : props.post.content;
-//   }
+const snippet = computed(
+  () => {
+    // 截取前100个字符作为摘要
+    return props.post.content.length > 100
+      ? props.post.content.slice(0, 100) + '...'
+      : props.post.content;
+  }
 
-// )
+)
 
 const gotoTag = (tag) => {
   router.push({ name: 'tag', params: { tag: tag }, query: { source: props.sourceType } })
@@ -177,5 +177,9 @@ const gotoTag = (tag) => {
   .post-tags {
     margin-top: var(--spacing-sm);
   }
+}
+
+.snippet {
+  font-size: 0.9rem;
 }
 </style>
