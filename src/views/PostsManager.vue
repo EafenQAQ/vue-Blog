@@ -108,7 +108,7 @@ const confirmDelete = async () => {
           headers: { 'Authorization': password.value }
         })
       );
-
+      // 并行发送删除请求
       await Promise.all(deletePromises);
 
       // 重新加载文章列表
