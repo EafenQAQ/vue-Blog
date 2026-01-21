@@ -51,12 +51,37 @@ exports.handler = async (event, context) => {
 
   console.log('Retrieving article with id:', id)
   try {
-    const page = await notion.pages.retrieve({ page_id: id })
-    console.log('Successfully retrieved article')
+    // 1. 获取页面属性（标题、标签等元数据）
+    const pageMetadata = await notion.pages.retrieve({ page_id: id })
+
+    // 2. 获取页面正文（Blocks）
+    // 因为正文可能由多个 Block 组成，我们使用循环确保拿取完整
+    let blocks = []
+    let cursor = undefined
+
+    while (true) {
+      const response = await notion.blocks.children.list({
+        block_id: id,
+        start_cursor: cursor,
+      })
+
+      blocks.push(...response.results)
+
+      // 如果还有更多块，更新 cursor 继续请求，否则跳出循环
+      if (!response.has_more) break
+      cursor = response.next_cursor
+    }
+
+    console.log('Successfully retrieved article and content blocks')
+
+    // 3. 将元数据和正文内容合并返回
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(page),
+      body: JSON.stringify({
+        metadata: pageMetadata,
+        content: blocks, // 这里是 Blocks 数组
+      }),
     }
   } catch (error) {
     console.error('Failed to retrieve article:', error)
