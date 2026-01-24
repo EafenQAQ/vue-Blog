@@ -28,8 +28,3 @@
     # 这样 Notion 中直接上传的图片也能正常处理
     "^https://s3\\.us-west-2\\.amazonaws\\.com/secure\\.notion-static\\.com/.*"
   ]
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
