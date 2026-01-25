@@ -153,6 +153,17 @@ a {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
     margin-top: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 在移动端，让标签云显示在文章列表上方 */
+  .layout > :first-child {
+    order: 2;
+  }
+
+  .layout > :last-child {
+    order: 1;
   }
 
   .pill {
