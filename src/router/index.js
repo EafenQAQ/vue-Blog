@@ -22,11 +22,6 @@ const router = createRouter({
       props: true,
       beforeEnter: requireConfirm,
     },
-    // {
-    //   path: '/publish',
-    //   name: 'publish',
-    //   component: () => import('../views/PublishPost.vue'),
-    // },
     {
       path: '/tag/:tag',
       name: 'tag',

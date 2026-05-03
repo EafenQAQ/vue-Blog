@@ -23,6 +23,7 @@
 import LoadSpinner from '@/components/LoadSpinner.vue';
 import getPost from '@/composables/getPost';
 import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { computed } from 'vue';
 
 
@@ -40,7 +41,7 @@ load(postID);
 
 const htmlContent = computed(() => {
   if (post.value && post.value.content) {
-    return marked(post.value.content);
+    return DOMPurify.sanitize(marked(post.value.content));
   } else return ''
 }
 )

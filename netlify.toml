@@ -28,3 +28,13 @@
     # 这样 Notion 中直接上传的图片也能正常处理
     "^https://s3\\.us-west-2\\.amazonaws\\.com/secure\\.notion-static\\.com/.*"
   ]
+
+# 安全响应头配置
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    X-XSS-Protection = "1; mode=block"

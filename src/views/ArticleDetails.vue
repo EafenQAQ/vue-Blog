@@ -26,6 +26,7 @@
 import LoadSpinner from '@/components/LoadSpinner.vue';
 import useArticle from '@/composables/useArticle';
 import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -37,7 +38,7 @@ const props = defineProps({
 
 const htmlContent = computed(() => {
   if (article.value && article.value.content) {
-    return marked(article.value.content);
+    return DOMPurify.sanitize(marked(article.value.content));
   }
   return '';
 }

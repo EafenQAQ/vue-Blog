@@ -27,7 +27,6 @@
         <nav class="footer-nav">
           <router-link to="/">首页</router-link>
           <router-link to="/psych">心理学专栏</router-link>
-          <router-link to="/publish">发布文章</router-link>
         </nav>
       </div>
 
