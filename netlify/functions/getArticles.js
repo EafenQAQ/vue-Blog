@@ -1,7 +1,17 @@
 const { Client } = require('@notionhq/client')
 
-// 初始化Notion客户端
-const notion = new Client({ auth: process.env.NOTION_SECRET })
+// Notion客户端配置 - 添加超时设置
+const notion = new Client({ 
+  auth: process.env.NOTION_SECRET,
+  timeout: 30000, // 30秒超时
+  retryConfig: {
+    retries: 3,           // 最多重试3次
+    minTimeout: 1000,      // 初始重试间隔1秒
+    maxTimeout: 10000,    // 最大重试间隔10秒
+    factor: 2,            // 指数退避因子
+    randomize: true,      // 随机化间隔避免惊群效应
+  }
+})
 const databaseId = process.env.NOTION_DATABASE_ID
 
 // 允许的源列表
@@ -11,6 +21,33 @@ const ALLOWED_ORIGINS = [
   process.env.URL,                     // Netlify自动设置的部署URL
   'http://localhost:8888',              // 本地开发
 ].filter(Boolean)
+
+// 网络重试装饰器
+async function withRetry(fn, maxRetries = 3, retryDelay = 1000) {
+  let lastError;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error;
+      const isNetworkError = error.code === 'ECONNRESET' || 
+                             error.code === 'ETIMEDOUT' ||
+                             error.code === 'ENOTFOUND' ||
+                             error.message?.includes('fetch failed') ||
+                             error.cause?.code === 'ECONNRESET';
+      
+      if (isNetworkError && attempt < maxRetries) {
+        const delay = retryDelay * Math.pow(2, attempt - 1) + Math.random() * 1000;
+        console.log(`Attempt ${attempt} failed, retrying in ${Math.round(delay)}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } else if (attempt < maxRetries) {
+        // 非网络错误也重试一次
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
+  }
+  throw lastError;
+}
 
 exports.handler = async (event, context) => {
   // 动态设置CORS头，只允许配置的域名
@@ -62,21 +99,24 @@ exports.handler = async (event, context) => {
 
   try {
     console.log('Querying Notion database...')
-    const queryBody = {
-      database_id: databaseId,
-      sorts: [
-        {
-          property: '创建时间',
-          direction: 'descending',
-        },
-      ],
-      page_size: 10,
-    }
-    if (cursor) {
-      queryBody.start_cursor = cursor
-    }
-
-    const res = await notion.databases.query(queryBody)
+    
+    // 使用重试机制包装API调用
+    const res = await withRetry(async () => {
+      const queryBody = {
+        database_id: databaseId,
+        sorts: [
+          {
+            property: '创建时间',
+            direction: 'descending',
+          },
+        ],
+        page_size: 10,
+      }
+      if (cursor) {
+        queryBody.start_cursor = cursor
+      }
+      return await notion.databases.query(queryBody)
+    });
 
     console.log('Query successful, returning data')
     // 返回成功响应
@@ -86,13 +126,13 @@ exports.handler = async (event, context) => {
       body: JSON.stringify(res),
     }
   } catch (err) {
-    console.error('Notion API Error:', err)
+    console.error('Notion API Error after retries:', err)
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
-        error: '服务器错误',
-        details: err.message,
+        error: '获取文章列表失败，请稍后重试',
+        details: process.env.NODE_ENV === 'development' ? err.message : undefined,
       }),
     }
   }
