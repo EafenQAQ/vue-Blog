@@ -16,7 +16,7 @@
 [functions]
   node_bundler = "esbuild"
   # 增大超时时间到25秒（默认10秒），应对网络波动
-  timeout_sec = 25
+  # timeout = 26 平台限制为10s，免费版用户不能提升
 
 [images]
   # 定义一个允许的远程图片源列表

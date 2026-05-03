@@ -1,5 +1,12 @@
 <template>
   <div id="PostDetails">
+    <!-- 返回按钮 - 固定在右下角 -->
+    <button class="back-btn" @click="goBack">
+      <svg class="back-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path d="M512 170.666667c-94.250667 0-170.666667 76.416-170.666667 170.666666s76.416 170.666667 170.666667 170.666667c94.250667 0 170.666667-76.416 170.666667-170.666667S606.250667 170.666667 512 170.666667z m0 85.333333c47.128 0 85.333333 38.205333 85.333333 85.333333s-38.205333 85.333333-85.333333 85.333333c-47.128 0-85.333333-38.205333-85.333333-85.333333s38.205333-85.333333 85.333333-85.333333z" p-id="5670"></path>
+        <path d="M426.666667 512l85.333333-85.333333 85.333333 85.333333" p-id="5671" fill="none" stroke="#e4a254" stroke-width="60" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
     <template v-if="error">
       {{ error }}
     </template>
@@ -20,12 +27,25 @@
 </template>
 
 <script setup>
+defineOptions({
+  name: 'PostDetails'
+})
 import LoadSpinner from '@/components/LoadSpinner.vue';
 import getPost from '@/composables/getPost';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+
+const goBack = () => {
+  if (window.history.length > 1) {
+    router.go(-1);
+  } else {
+    router.push('/psych');
+  }
+};
 
 const props = defineProps({
   id: {
@@ -212,5 +232,38 @@ const htmlContent = computed(() => {
   background: hsl(from var(--secondary-accent) h s calc(l - 10));
   transform: translateY(-2px);
   transition: all 0.3s ease;
+}
+
+/* 返回按钮样式 - 固定右下角 */
+.back-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--base-accent);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.back-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.back-icon path {
+  fill: white;
+}
+
+.back-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 </style>

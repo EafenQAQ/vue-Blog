@@ -15,11 +15,14 @@
 </template>
 
 <script setup>
+defineOptions({
+  name: 'PsychArticles'
+})
 import PostList from '@/components/PostList.vue';
 import TagsCloud from '@/components/TagsCloud.vue';
 import LoadSpinner from '@/components/LoadSpinner.vue';
 import useArticles from '@/composables/useArticles';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onActivated, onDeactivated, ref } from 'vue';
 
 const sentinel = ref(null)
 
@@ -44,12 +47,12 @@ const observer = new IntersectionObserver(handleIntersection
 })
 
 
-onMounted(() => {
+onActivated(() => {
   observer.observe(sentinel.value)
 }
 )
 
-onUnmounted(() => {
+onDeactivated(() => {
   observer.disconnect()
 }
 )

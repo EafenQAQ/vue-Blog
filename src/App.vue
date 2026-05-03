@@ -26,9 +26,11 @@
       </h1>
       <NavBar />
 
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component, route }">
         <transition name="fade" mode="out-in">
-          <component :is="Component" />
+          <keep-alive :include="['PsychArticles', 'ArticleDetails']">
+            <component :is="Component" :key="route.fullPath" />
+          </keep-alive>
         </transition>
       </router-view>
 
