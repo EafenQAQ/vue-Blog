@@ -30,7 +30,7 @@
         <transition name="fade" mode="out-in">
           <component :is="Component" />
         </transition>
-      </router-view> 
+      </router-view>
 
     </main>
     <FooterBar />
