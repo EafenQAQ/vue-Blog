@@ -53,6 +53,15 @@
   box-sizing: border-box;
 }
 
+/* 全局禁用移动端文字选中 */
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 body {
   margin: 0;
   padding: 0;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <main>
-      <h1>
+      <h1 class="header-title" ref="titleRef" @click="createStars">
         <span>猫爪博客</span>
         <span>
           <svg t="1752130758764" class="icon" viewBox="0 0 1304 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -40,8 +40,29 @@
 <script setup>
 import NavBar from './components/NavBar.vue'
 import FooterBar from './components/FooterBar.vue'
+import { ref } from 'vue'
 
+const titleRef = ref(null)
 
+const createStars = () => {
+  const container = titleRef.value
+  if (!container) return
+  
+  const count = 5
+  
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const star = document.createElement('span')
+      star.className = 'star'
+      star.innerHTML = ['✦', '✧', '★', '☆', '✨'][Math.floor(Math.random() * 5)]
+      star.style.left = Math.random() * 60 + 20 + '%'
+      star.style.color = Math.random() > 0.5 ? 'var(--base-color)' : 'var(--secondary-color)'
+      container.appendChild(star)
+      
+      setTimeout(() => star.remove(), 1500)
+    }, i * 80)
+  }
+}
 </script>
 
 <style scoped>
@@ -57,7 +78,7 @@ main {
 }
 
 /* 主标题样式 */
-main>h1 {
+.header-title {
   background: linear-gradient(135deg, var(--base-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -69,6 +90,55 @@ main>h1 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.3s ease;
+}
+
+/* 禁用内部文字选中 */
+.header-title,
+.header-title * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.header-title:hover {
+  filter: drop-shadow(0 0 15px rgba(235, 186, 128, 0.5));
+  transform: scale(1.02);
+}
+
+.header-title:active {
+  transform: scale(0.98);
+}
+
+/* 星星飘出效果 */
+:deep(.star) {
+  position: absolute;
+  font-size: 1.2rem;
+  animation: starFloat 1.5s ease-out forwards;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes starFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-40px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(0.5);
+  }
 }
 
 /* 主标题装饰 */

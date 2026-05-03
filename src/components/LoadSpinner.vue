@@ -1,89 +1,46 @@
 <template>
-  <div class="spin"></div>
+  <div class="loader">
+    <svg t="1752130758764" class="paw-icon" viewBox="0 0 1304 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="48" height="48">
+      <path
+        d="M36.66666666 448.53771062a165.74755953 140.89399541 90 1 0 281.78799178 0 165.74755953 140.89399541 90 1 0-281.78799178 0Z"
+        fill="#ffd200" p-id="6254"></path>
+      <path
+        d="M1087.04090506 747.12063322a135.92328297 165.74755953 12.07 1 0 69.31780671-324.16670937 135.92328297 165.74755953 12.07 1 0-69.31780671 324.16670937Z"
+        fill="#ffd200" p-id="6255"></path>
+      <path
+        d="M337.36979121 201.03049631a185.03049631 144.83628477 90 1 0 289.67257053 0 185.03049631 144.83628477 90 1 0-289.67257053 0Z"
+        fill="#ffd200" p-id="6256"></path>
+      <path
+        d="M855.44600527 433.63750153a144.83628477 185.03049631 6.71 1 0 43.2394355-367.52617687 144.83628477 185.03049631 6.71 1 0-43.2394355 367.52617687Z"
+        fill="#ffd200" p-id="6257"></path>
+      <path
+        d="M948.00863919 777.46177106c-10.36993497 157.00596156-161.976674 241.2509716-341.3508425 229.33840204s-318.63982691-115.18341206-308.52699722-272.27507604 167.89010806-256.67732141 343.57909247-262.93356315c181.68812087 36.50902841 316.66868223 148.77857416 306.29874725 305.87023715z"
+        fill="#ffd200" p-id="6258"></path>
+    </svg>
+  </div>
 </template>
 
 <script setup>
-
 </script>
 
 <style scoped>
-/* 加载动画容器 */
-.spin {
-  display: block;
-  width: 50px;
-  height: 50px;
-  margin: var(--spacing-2xl) auto;
-  border: 4px solid var(--base-light);
-  border-radius: var(--radius-full);
-  border-top-color: var(--secondary-accent);
-  border-right-color: var(--base-accent);
-  animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-  position: relative;
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-2xl);
 }
 
-/* 内部装饰圆 */
-.spin::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(45deg, var(--base-color), var(--secondary-color));
-  border-radius: var(--radius-full);
-  animation: pulse 1.5s ease-in-out infinite alternate;
+.paw-icon {
+  animation: bounce 1.2s ease-in-out infinite;
 }
 
-/* 旋转动画 */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
   }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* 脉冲动画 */
-@keyframes pulse {
-  0% {
-    opacity: 0.6;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.2);
-  }
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .spin {
-    width: 40px;
-    height: 40px;
-    margin: var(--spacing-xl) auto;
-    border-width: 3px;
-  }
-
-  .spin::before {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .spin {
-    width: 35px;
-    height: 35px;
-    margin: var(--spacing-lg) auto;
-  }
-
-  .spin::before {
-    width: 14px;
-    height: 14px;
+  50% {
+    transform: translateY(-12px);
   }
 }
 </style>

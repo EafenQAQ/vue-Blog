@@ -21,23 +21,66 @@
         </svg>
       </div>
       
-      <h1>欢迎来到猫爪博客</h1>
+      <h1 
+        class="title-interactive"
+        @click="createHearts"
+        @touchstart="touchTimer = setTimeout(() => createHearts(), 500)"
+        @touchend="clearTouchTimer"
+        @touchcancel="clearTouchTimer"
+      >
+        欢迎来到猫爪博客
+      </h1>
       <p class="subtitle">记录生活，分享点滴</p>
       
       <button class="explore-btn" @click="goToPsych">
         开启探索之旅~
       </button>
+      
+      <!-- 飘出的爱心容器 -->
+      <div class="hearts-container" ref="heartsContainer"></div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 const router = useRouter()
+const heartsContainer = ref(null)
+let touchTimer = null
 
 const goToPsych = () => {
   router.push({ name: 'psych' })
+}
+
+const createHearts = () => {
+  const container = heartsContainer.value
+  if (!container) return
+  
+  // 创建3-5个爱心
+  const count = Math.floor(Math.random() * 3) + 3
+  
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const heart = document.createElement('span')
+      heart.className = 'heart'
+      heart.innerHTML = ['❤', '🧡', '💛', '✨', '🐾'][Math.floor(Math.random() * 5)]
+      heart.style.left = Math.random() * 80 + 10 + '%'
+      heart.style.animationDuration = (Math.random() * 1 + 1) + 's'
+      container.appendChild(heart)
+      
+      // 动画结束后移除
+      setTimeout(() => heart.remove(), 2000)
+    }, i * 100)
+  }
+}
+
+const clearTouchTimer = () => {
+  if (touchTimer) {
+    clearTimeout(touchTimer)
+    touchTimer = null
+  }
 }
 </script>
 
@@ -52,6 +95,7 @@ const goToPsych = () => {
 .welcome-section {
   text-align: center;
   padding: var(--spacing-2xl);
+  position: relative;
 }
 
 .welcome-icon {
@@ -68,13 +112,73 @@ const goToPsych = () => {
   }
 }
 
-h1 {
+.title-interactive {
   background: linear-gradient(135deg, var(--base-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-size: var(--font-3xl);
   margin-bottom: var(--spacing-md);
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.title-interactive:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 20px rgba(235, 186, 128, 0.6));
+}
+
+.title-interactive:active {
+  transform: scale(0.98);
+}
+
+.title-interactive:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 20px rgba(235, 186, 128, 0.6));
+}
+
+.title-interactive:active {
+  transform: scale(0.98);
+}
+
+/* 飘出爱心动画 */
+.hearts-container {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+:deep(.heart) {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: floatUp 2s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-60px) scale(1.2) rotate(15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(0.8) rotate(-15deg);
+  }
 }
 
 .subtitle {
@@ -104,7 +208,7 @@ h1 {
     padding: var(--spacing-xl);
   }
 
-  h1 {
+  .title-interactive {
     font-size: var(--font-2xl);
   }
 
