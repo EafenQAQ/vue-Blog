@@ -34,7 +34,7 @@ import LoadSpinner from '@/components/LoadSpinner.vue';
 import useArticle from '@/composables/useArticle';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -54,13 +54,17 @@ const props = defineProps({
   }
 })
 
+// 进入详情页时滚动到顶部
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
+
 const htmlContent = computed(() => {
   if (article.value && article.value.content) {
     return DOMPurify.sanitize(marked(article.value.content));
   }
   return '';
-}
-)
+})
 
 const articleID = props.id
 const { article, error, load } = useArticle();
